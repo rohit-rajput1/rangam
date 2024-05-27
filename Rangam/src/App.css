@@ -1,0 +1,122 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #f8f9fa; /* Light grey background */
+  font-family: 'Arial', sans-serif;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #000000aa); /* Black shadow for car theme */
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+  background-color: #ffffff; /* White background for cards */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.2s ease-in-out;
+  margin: 1rem; /* Add margin to space out the cards */
+  flex: 0 0 auto; /* Ensure cards don't shrink */
+}
+.card:hover {
+  transform: translateY(-10px); /* Lift card on hover */
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  gap: 2rem; /* Space between cards */
+  padding: 2rem;
+}
+
+/* Car image styling */
+img {
+  width: 100%;
+  height: auto;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Car details */
+.text-lg {
+  font-size: 1.125rem;
+  color: #333; /* Darker text color */
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-gray-800 {
+  color: #333; /* Darker text color */
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.text-gray-600 {
+  color: #555; /* Medium dark text color */
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-48 {
+  height: 12rem;
+}
+
+.object-cover {
+  object-fit: cover;
+}
