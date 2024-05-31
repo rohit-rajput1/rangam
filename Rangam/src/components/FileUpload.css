@@ -5,12 +5,11 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    width: 100%;
     font-family: 'Roboto', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #f5f7fa 25%, #e2e8f0 100%);
+    background-color: #f5f7fa;
 }
 
 .App {
@@ -19,7 +18,6 @@ body, html {
     align-items: center;
     justify-content: center;
     height: 100%;
-    width: 100%;
     text-align: center;
 }
 
@@ -28,8 +26,8 @@ body, html {
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    width: 90%;
+    max-width: 600px;
+    width: 100%;
     text-align: center;
 }
 
@@ -46,25 +44,13 @@ p {
 }
 
 input[type="file"] {
-    display: none;
-}
-
-.label-file {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    margin-bottom: 1rem;
+    padding: 0.75rem;
+    margin: 1rem 0;
     font-size: 1rem;
     border: 1px solid #ccc;
-    border-radius: 25px;
-    cursor: pointer;
-    background-color: #f5f7fa;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    color: #333;
-}
-
-.label-file:hover {
-    background-color: #e2e8f0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 button {
@@ -73,10 +59,10 @@ button {
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 25px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
-    margin-top: 1.5rem; /* Ensure a good gap between the Choose file and Extract button */
+    margin-top: 1rem;
 }
 
 button:hover {
@@ -96,10 +82,4 @@ button:hover {
     border-radius: 8px;
     margin-top: 1rem;
     text-align: left;
-}
-
-footer {
-    margin-top: 2rem;
-    color: #aaa;
-    font-size: 0.9rem;
 }
