@@ -1,0 +1,85 @@
+/* src/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f7fa;
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+.container {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+input[type="file"] {
+    padding: 0.75rem;
+    margin: 1rem 0;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    margin-top: 1rem;
+}
+
+button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.error {
+    color: red;
+    margin-top: 1rem;
+}
+
+.job-description {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    margin-top: 1rem;
+    text-align: left;
+}
