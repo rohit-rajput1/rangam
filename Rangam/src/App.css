@@ -1,122 +1,105 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  background-color: #f8f9fa; /* Light grey background */
-  font-family: 'Arial', sans-serif;
+/* src/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 25%, #e2e8f0 100%);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #000000aa); /* Black shadow for car theme */
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    text-align: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.container {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 90%;
+    text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1rem;
 }
 
-.card {
-  padding: 2em;
-  background-color: #ffffff; /* White background for cards */
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: transform 0.2s ease-in-out;
-  margin: 1rem; /* Add margin to space out the cards */
-  flex: 0 0 auto; /* Ensure cards don't shrink */
-}
-.card:hover {
-  transform: translateY(-10px); /* Lift card on hover */
+p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2rem;
 }
 
-.read-the-docs {
-  color: #888;
+input[type="file"] {
+    display: none;
 }
 
-.flex-container {
-  display: flex;
-  flex-wrap: nowrap; /* Prevent wrapping */
-  overflow-x: auto; /* Enable horizontal scrolling */
-  gap: 2rem; /* Space between cards */
-  padding: 2rem;
+.label-file {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: #f5f7fa;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    color: #333;
 }
 
-/* Car image styling */
-img {
-  width: 100%;
-  height: auto;
-  border-bottom: 2px solid #ddd;
+.label-file:hover {
+    background-color: #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Car details */
-.text-lg {
-  font-size: 1.125rem;
-  color: #333; /* Darker text color */
+button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    margin-top: 1.5rem; /* Ensure a good gap between the Choose file and Extract button */
 }
 
-.font-semibold {
-  font-weight: 600;
+button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.text-gray-800 {
-  color: #333; /* Darker text color */
+.error {
+    color: red;
+    margin-top: 1rem;
 }
 
-.mb-2 {
-  margin-bottom: 0.5rem;
+.job-description {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    margin-top: 1rem;
+    text-align: left;
 }
 
-.text-gray-600 {
-  color: #555; /* Medium dark text color */
-}
-
-.bg-white {
-  background-color: #ffffff;
-}
-
-.rounded-lg {
-  border-radius: 0.5rem;
-}
-
-.shadow-md {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.overflow-hidden {
-  overflow: hidden;
-}
-
-.p-4 {
-  padding: 1rem;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.h-48 {
-  height: 12rem;
-}
-
-.object-cover {
-  object-fit: cover;
+footer {
+    margin-top: 2rem;
+    color: #aaa;
+    font-size: 0.9rem;
 }
