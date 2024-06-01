@@ -1,0 +1,2 @@
+We are seeking a Python Developer with experience in Django and REST framework to join our backend development team. The ideal candidate will have strong Python programming skills and a solid understanding of web development principles. Responsibilities include designing and implementing RESTful APIs, optimizing backend performance, and collaborating with frontend developers to integrate server-side logic with the user interface. Experience with machine learning and data science is a plus.
+
