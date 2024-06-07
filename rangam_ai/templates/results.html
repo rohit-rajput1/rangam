@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matched Prompts</title>
+</head>
+<body>
+    <h1>Matched Prompts</h1>
+    {% if matched_prompts %}
+        <ul>
+            {% for prompt in matched_prompts %}
+                <li>{{ prompt }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No matched prompts found.</p>
+    {% endif %}
+</body>
+</html>

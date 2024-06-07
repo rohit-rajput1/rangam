@@ -1,0 +1,16 @@
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Job Description</title>
+</head>
+<body>
+    <h1>Upload Job Description</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>
