@@ -1,64 +1,56 @@
-import re
-from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import JobDescription
+from dotenv import load_dotenv
+import os
+import openai
 
-def preprocess_text(text):
-    # Simple preprocessing: convert to lowercase and remove punctuation
-    return re.sub(r'[^\w\s]', '', text.lower())
+# Load environment variables from .env file
+load_dotenv()
 
-def load_prompts():
-    file_path = '/home/rohit/Documents/Rangam/rangam_ai/prompts.txt'
-    prompts = []
+# Access the API key
+api_key = os.getenv('OPENAI_API_KEY')
+
+# Define your prompts list
+prompts = [
+    "Extract the key responsibilities from the job description.",
+    "Identify the required skills and qualifications for this job.",
+    "Suggest possible interview questions based on the job description.",
+    # Add more prompts as needed
+]
+
+@api_view(['POST'])
+def post_job_description(request):
+    job_description = request.data.get('job_description')
+    if not job_description:
+        return Response({'error': 'job_description field is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Send job_description to OpenAI API with the maintained prompts
+    results = []
     try:
-        with open(file_path, 'r') as file:
-            for line in file:
-                prompt = line.strip()
-                if prompt:
-                    prompts.append(prompt)
-    except FileNotFoundError:
-        print(f"File {file_path} not found.")
-    return prompts
+        openai.api_key = api_key  # Use the api_key variable here
+        for prompt in prompts:
+            messages = [
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": f"{prompt}\n\nJob Description:\n{job_description}"}
+            ]
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=messages,
+                max_tokens=150,
+                n=1,
+                temperature=0.7
+            )
+            result = response['choices'][0]['message']['content'].strip()
+            # Convert the result to a list of points
+            points = result.split("\n")
+            # Remove any empty points
+            points = [point for point in points if point.strip()]
+            results.append(points)
+    except openai.error.OpenAIError as e:
+        # Handle specific OpenAI errors
+        return Response({'error': f'OpenAI API Error: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except Exception as e:
+        return Response({'error': f'An error occurred: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
-def match_prompts(text, prompts):
-    return [prompt for prompt in prompts if prompt.lower() in text]
-
-class PostJobDescription(APIView):
-    def post(self, request):
-        file = request.FILES.get('file', None)
-        if file is None:
-            return Response({'error': 'No file provided'}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Read the contents of the file
-        job_description_text = file.read().decode('utf-8')
-
-        # Load prompts from the file
-        prompts = load_prompts()
-
-        # Match prompts against the job description text
-        matched_prompts = match_prompts(job_description_text, prompts)
-
-        return Response({'matched_prompts': matched_prompts}, status=status.HTTP_200_OK)
-
-class TestRecruiterBox(APIView):
-    def post(self, request):
-        job_description_id = request.data.get('job_description_id', None)
-        if job_description_id is None:
-            return Response({'error': 'No job description ID provided'}, status=status.HTTP_400_BAD_REQUEST)
-
-        try:
-            # Load prompts from the file
-            prompts = load_prompts()
-
-            # Fetch the job description text based on the ID
-            job_description = JobDescription.objects.get(id=job_description_id)
-
-            # Match prompts against the job description text
-            matched_prompts = match_prompts(job_description.description, prompts)
-
-            return Response({'matched_prompts': matched_prompts}, status=status.HTTP_200_OK)
-
-        except JobDescription.DoesNotExist:
-            return Response({'error': 'Job description not found'}, status=status.HTTP_404_NOT_FOUND)
+    return Response({'results': results}, status=status.HTTP_200_OK)
