@@ -1,6 +1,0 @@
-python
-django
-rest framework
-machine learning
-data science
-rohit
