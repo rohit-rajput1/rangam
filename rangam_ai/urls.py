@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import post_job_description
-
+from rangam_ai.views import UserView,TokenView,JobDescriptionView
 urlpatterns = [
-    path('post_job_description/', post_job_description, name='post_job_description'),
+    path('users/',UserView.as_view(),name='users'),
+    path('tokens/',TokenView.as_view(),name='tokens'),
+    path('job_description/',JobDescriptionView.as_view(),name='job_description'),
 ]
-
