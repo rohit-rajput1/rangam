@@ -10,21 +10,28 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+from dotenv import load_dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables from .env file
 
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
+APIKEY = os.getenv('OPENAI_APIKEY')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)1-x!0%n&b5^-aot1zzx-tza#_v9^xm*w01^@84$d(4%m0lyd7'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-)1-x!0%n&b5^-aot1zzx-tza#_v9^xm*w01^@84$d(4%m0lyd7')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
+# settings.py
 ALLOWED_HOSTS = []
 
 
@@ -38,12 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders', # for running the react app otherwise django will block this request.
+    # Internal apps
     'rangam_ai',
+    #external app
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]  # Make sure the port number matches the one you're using for the React app.
-
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:5173').split(',')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -124,7 +133,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -132,3 +140,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULR_PERMISSION_CLASSES':[
+        'rest_framework.permissions.isAuthenticated',
+    ],
+}
