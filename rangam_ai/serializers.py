@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from rangam_ai.models import JobDescription
+from rangam_ai.models import JobDescription, JobSkillsRequired, JobQuestionsRequired, JobKeyResponsibilitiesRequired
 from django.contrib.auth.models import User
 from rangam_ai.utils import send_job_description_to_api
 from rest_framework.authtoken.models import Token
@@ -25,6 +25,44 @@ class JobDescriptionSerializer(serializers.ModelSerializer):
         jd.save()
         
         # Return the saved JobDescription object
+        return jd
+
+class JobSkillsRequiredSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobSkillsRequired
+        fields = ("id", "_input_job_description", "_output_response")
+        extra_kwargs = {"_output_response": {"read_only": True}}
+
+    def create(self, validated_data):
+        jd = JobSkillsRequired(**validated_data)
+        jd._output_response = send_job_description_to_api(validated_data["_input_job_description"], 'keySkills')
+        jd.save()
+        return jd
+
+
+class JobQuestionsRequiredSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobQuestionsRequired
+        fields = ("id", "_input_job_description", "_output_response")
+        extra_kwargs = {"_output_response": {"read_only": True}}
+
+    def create(self, validated_data):
+        jd = JobQuestionsRequired(**validated_data)
+        jd._output_response = send_job_description_to_api(validated_data["_input_job_description"], 'keyQuestions')
+        jd.save()
+        return jd
+
+
+class JobKeyResponsibilitiesRequiredSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobKeyResponsibilitiesRequired
+        fields = ("id", "_input_job_description", "_output_response")
+        extra_kwargs = {"_output_response": {"read_only": True}}
+
+    def create(self, validated_data):
+        jd = JobKeyResponsibilitiesRequired(**validated_data)
+        jd._output_response = send_job_description_to_api(validated_data["_input_job_description"], 'keyResponsibilities')
+        jd.save()
         return jd
 
 class UserSerializer(serializers.ModelSerializer):
