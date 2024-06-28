@@ -7,9 +7,9 @@ openai.api_key = settings.APIKEY
 
 # Define your prompts dictionary
 prompts = {
-    "keySkills": "Identify the required skills and qualifications for this job.",
-    "keyQuestions": "Suggest possible interview questions based on the job description.",
-    "keyResponsibilities": "Extract the key responsibilities from the job description."
+    "keySkills": "Identify the required skills and qualifications for this job in bullet points.",
+    "keyQuestions": "Suggest 5-6 possible interview questions based on the job description and provide answers.",
+    "keyResponsibilities": "Extract the key responsibilities from the job description in bullet points."
 }
 
 def send_job_description_to_api(job_description, prompt_type):
@@ -37,11 +37,26 @@ def send_job_description_to_api(job_description, prompt_type):
                 temperature=0.7,  # Control the randomness of the output
             )
             
-            # Process the response to extract bullet points
+            # Process the response to format it appropriately
             response = res["choices"][0]["message"]["content"]
-            bullet_points = [point.strip("- ") for point in response.split("\n- ") if point.strip()]
             
-            return bullet_points
+            if prompt_type == "keySkills":
+                bullet_points = [point.strip("- ") for point in response.split("\n- ") if point.strip()]
+                return {"skills_and_qualifications": bullet_points}
+            
+            elif prompt_type == "keyQuestions":
+                q_and_a = []
+                items = response.split("\n\n")
+                for i in range(0, len(items), 2):
+                    if i + 1 < len(items):
+                        question = items[i].replace("Question:", "").strip()
+                        answer = items[i + 1].replace("Answer:", "").strip()
+                        q_and_a.append({"Question": question, "Answer": answer})
+                return {"questions_and_answers": q_and_a}
+            
+            elif prompt_type == "keyResponsibilities":
+                responsibilities = [point.strip("- ") for point in response.split("\n- ") if point.strip()]
+                return {"responsibilities": responsibilities}
         
         except openai.error.APIError as e:
             raise ValueError(f"OpenAI API returned an API Error: {e}")
@@ -202,5 +217,4 @@ def send_job_description_to_api(job_description, prompt_type):
         
 #         except openai.error.InvalidRequestError as e:
 #             raise ValueError(f"OpenAI API request was invalid: {e}")
-
 
