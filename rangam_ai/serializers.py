@@ -12,19 +12,10 @@ class JobDescriptionSerializer(serializers.ModelSerializer):
         extra_kwargs = {"_output_response": {"read_only": True}}
 
     def create(self, validated_data):
-        # Initialize a new JobDescription object with the validated data
         jd = JobDescription(**validated_data)
-        
-        # Send the input job description to the external API and get the response
-        _output_response = send_job_description_to_api(validated_data["_input_job_description"])
-        
-        # Set the output response on the JobDescription object
+        _output_response = send_job_description_to_api(validated_data["_input_job_description"], 'keyQuestions')
         jd._output_response = _output_response
-        
-        # Save the JobDescription object to the database
         jd.save()
-        
-        # Return the saved JobDescription object
         return jd
 
 class JobSkillsRequiredSerializer(serializers.ModelSerializer):
@@ -39,7 +30,6 @@ class JobSkillsRequiredSerializer(serializers.ModelSerializer):
         jd.save()
         return jd
 
-
 class JobQuestionsRequiredSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobQuestionsRequired
@@ -49,9 +39,15 @@ class JobQuestionsRequiredSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         jd = JobQuestionsRequired(**validated_data)
         jd._output_response = send_job_description_to_api(validated_data["_input_job_description"], 'keyQuestions')
+        formatted_qa = []
+        for idx, item in enumerate(jd._output_response["questions_and_answers"], start=1):
+            formatted_qa.append({
+                f"Question {idx}": item["Question"].strip(),
+                "Answer": item["Answer"].strip()
+            })
+        jd._output_response = {"questions_and_answers": formatted_qa}
         jd.save()
         return jd
-
 
 class JobKeyResponsibilitiesRequiredSerializer(serializers.ModelSerializer):
     class Meta:
@@ -72,22 +68,11 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
     
     def create(self, validated_data):
-        # Extract the password from validated data
         password = validated_data.pop("password")
-        
-        # Create a new User object with the remaining data
         user = User.objects.create(**validated_data)
-        
-        # Set the user's password (hashing it)
         user.set_password(password)
-        
-        # Save the user object to the database
         user.save()
-        
-        # Create an authentication token for the user
         Token.objects.create(user=user)
-        
-        # Return the newly created user object
         return user
 
 class TokenSerializer(serializers.Serializer):
